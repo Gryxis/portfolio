@@ -1,0 +1,33 @@
+<h1>
+    My Portfolio
+</h1>
+
+<p>
+    Welcome to a small portfolio of mine where I will post some small projects I want to try out.
+</p>
+
+<p>
+    Here are the projects:
+</p>
+
+<div class="container text-center d-flex flex-wrap justify-content-center">
+
+    <ng-container *ngFor="let project of projects">
+        <ng-container *ngTemplateOutlet="cardTemplate; context: {$implicit: project}">
+        </ng-container>
+
+    </ng-container>
+
+    <ng-template #cardTemplate let-project>
+        <a class="card m-2" style="width:20rem;" [routerLink]="project.link">
+            <div class="card-body">
+                <h5 class="card-title"> {{project.title}} </h5>
+                <div class="card-text text-body"> {{project.description}} </div>
+            </div>
+        </a>
+    </ng-template>
+</div>
+
+<p class="mt-5">
+    Stay in tune, I will try to update this website with new projects when I have time :-)
+</p>
