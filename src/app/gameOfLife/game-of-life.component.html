@@ -1,0 +1,125 @@
+<h1>
+    Conway's Game of Life
+</h1>
+
+
+<p>
+    This is a small implementation of Conway's game of life.
+</p>
+
+<p>
+    It is a small game which follows these rules:
+</p>
+<ol>
+    <li>
+        If a cell is dead and has exactly 3 living neighbours, it becomes alive.
+    </li>
+    <li>
+        If a cell is alive and less than 2 neighbours are alive, it dies of loneliness
+    </li>
+    <li>
+        If a cell is alive and has 2 or 3 living neighbours, it survives.
+    </li>
+    <li>
+        If a cell is alive and more than 3 neighbours are also alive, it dies due to overpopulation
+    </li>
+</ol>
+
+<p>
+    Below you will find a implementation. Since i can not provide you with a infinite grid,<br/>
+    I will let you choose the size of a sqare. This square is a toroid, meaning if the grid reaches the boundary,<br/>
+    it will continue on the other side.<br/>
+</p>
+<p class="mb-5">
+    This game has some very interesting patterns so feel free to try them out:
+</p>
+
+<div class="d-flex mb-3">
+    <div class="input-group me-4"
+         style="width: 20rem;"
+         [ngbTooltip]="sizeTooltip">
+        <span class="input-group-text">Size of the grid</span>
+        <input type="number"
+                class="form-control"
+                [(ngModel)]="size"
+                [disabled]="isRunning"
+                [ngModelOptions]="{standalone: true}"/>
+        <button class="btn btn-outline-secondary"
+                type="button"
+                (click)="onCreate()">
+            Create grid
+        </button>
+    </div>
+    
+    <div class="input-group "
+         style="width: 20rem;"
+         [ngbTooltip]="fpsTooltip">
+        <span class="input-group-text"> FPS</span>
+        <input type="number"
+                class="form-control"
+                min="1"
+                max="30"
+                [disabled]="isRunning"
+                [(ngModel)]="fps"
+                [ngModelOptions]="{standalone: true}"/>
+    </div>
+</div>
+
+<div class="input-group mb-3"
+     style="width: 20rem;"
+     [ngbTooltip]="soupTooltip">
+    <span class="input-group-text"> Soup</span>
+    <input type="number"
+            class="form-control"
+            min="1"
+            max="99"
+            [disabled]="isRunning"
+            [(ngModel)]="soupChance"
+            [ngModelOptions]="{standalone: true}"/>
+    <span class="input-group-text"> (%)</span>
+    <button class="btn btn-outline-secondary"
+            type="button"
+            [disabled]="isRunning || soupChance < 0 || soupChance > 100"
+            (click)="onFillSoup()">
+        Fill Soup
+    </button>
+</div>
+
+<div class="d-flex mb-5">
+
+    <button class="btn btn-primary"
+                type="button"
+                [disabled]="!(currentState.length) || !fps || fps > 30"
+                (click)="onStartOrPause()">
+                <span [ngClass]="isRunning ? 'icon-pause': 'icon-play'"></span>
+    </button>
+    <button class="btn btn-secondary"
+                type="button"
+                [disabled]="!fps || fps > 30"
+                (click)="onKillAll()">
+                <span class="icon-refresh-ccw"></span>
+    </button>
+</div>
+
+<div class="game-of-life-grid container-xxl" aria-label="grid of the game of life">
+    <div *ngFor="let row of currentState;  index as rowIndex" class="game-of-life-row">
+        <ng-container *ngFor="let column of row; index as columnIndex">
+            <ng-container *ngIf="!isRunning">
+                <label aria-label="checkbox for whether the cell is alive (true) or not"
+                       class="game-of-life-cell"
+                       [ngClass]="{ 'living-cell': currentState[rowIndex][columnIndex]}">
+                    <input type="checkbox"
+                           [(ngModel)]="currentState[rowIndex][columnIndex]"
+                           [id]="'game-of-life-cell-' + rowIndex + '-' + columnIndex"
+                           [ngModelOptions]="{standalone: true}">
+                </label>
+            </ng-container>
+
+            <ng-container *ngIf="isRunning">
+                <div [ngClass]="{ 'living-cell': column}" class="game-of-life-cell">
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+
+</div>

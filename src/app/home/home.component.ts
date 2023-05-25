@@ -15,8 +15,8 @@ export class HomeComponent {
   projects: Project[] =  [
     {
       title: 'Game of Life',
-      link: 'game-of-live',
-      description: 'a small implementation of the game of live.',
+      link: 'game-of-life',
+      description: 'a small implementation of the game of life.',
     },
   ];
 }
