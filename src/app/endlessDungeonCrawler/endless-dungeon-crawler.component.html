@@ -1,0 +1,60 @@
+<h1>
+    Endless Dungeon Crawler
+</h1>
+
+
+<p>
+    This is a endless dungeon crawler using procedural ocntent generation to generate the dungeon.
+</p>
+
+<p>
+    For this I will create a rendom placement of stones in a 2D dungeon to create a cave.
+    To get results which look cavelike, I will use Cellular automate similar to the game of live to
+    shift the stones.
+</p>
+<p>
+    Therefore I have some rules you can change:
+</p>
+<div class="was-validated">
+
+    <label>
+        At the beginning I will fill a square size {{SIZE}} with stones.
+        The probabillity of a field to be a stone is:
+        <span class="input-group is-invalid" style="width: 10rem; display: inline-flex;">
+            <input type="number" class="form-control" [(ngModel)]="propability" [min]="1" [max]="99"/>
+    
+        </span>
+        percent.
+    </label>
+    <label>
+        I will simulate
+        <span class="input-group is-invalid" style="width: 10rem; display: inline-flex;">
+            <input type="number" class="form-control" [(ngModel)]="simulationStepCount" [min]="1"/>
+        </span>
+        steps of the cellular automata.
+    </label>
+    <p>
+        For each step the following rules apply to perform a simulation step:
+    </p>
+    <label>
+        An empty field will turn into a rock if at least <strong>T</strong> =
+        <span class="input-group is-invalid" style="width: 10rem; display: inline-flex;">
+            <input type="number" class="form-control" [(ngModel)]="threshold" [min]="0" [max]="8"/>
+        </span>
+        neighbors are filled with rocks, otherwise it will turn into an empty field.
+    </label>
+
+</div>
+
+<p class="mb-5">
+    <button type="button"
+            class="btn btn-outline-primary"
+            (click)="onStart()">
+        Start:
+    </button>
+</p>
+
+<canvas #endlessCrawlerCanvas [attr.width]="SIZE * PIXEL_SIZE" [attr.height]="SIZE * PIXEL_SIZE">
+</canvas>
+
+<p style="height: 2rem;"></p>

@@ -1,0 +1,27 @@
+$dungeon_cell_size: 8px;
+$dungeon_part_size: calc(50 * $dungeon_cell_size);
+
+.dungeon-container {
+    display: grid;
+    width: calc(3 * $dungeon_part_size);
+    height: calc(3 * $dungeon_part_size);
+    grid-template-columns: $dungeon_part_size $dungeon_part_size $dungeon_part_size;
+}
+
+.dungeon-part {
+    width: $dungeon_part_size;
+    height: $dungeon_part_size;
+    display: flex;
+    flex-wrap: wrap;
+
+    .dungeon-cell {
+        width: $dungeon_cell_size;
+        height: $dungeon_cell_size;
+        // border: 1px solid black;
+        background-color: beige;
+
+        &.stone {
+            background-color: rgb(152, 118, 74);
+        }
+    }
+}

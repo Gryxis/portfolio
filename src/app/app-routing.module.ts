@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('./gameOfLife/game-of-life.module').then( module => module.GameOfLifeModule), 
   },
   {
+    path: 'endless-dungeon-crawler',
+    loadChildren: () => import('./endlessDungeonCrawler/endless-dungeon-crawler.module').then( m => m.EndlessDungeonCrawlerModule),
+  },
+  {
     path: '',
     pathMatch: 'full',
     loadChildren: () => import('./home/home.module').then( module => module.HomeModule), 
