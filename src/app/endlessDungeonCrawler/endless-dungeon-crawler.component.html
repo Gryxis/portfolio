@@ -44,6 +44,10 @@
         neighbors are filled with rocks, otherwise it will turn into an empty field.
     </label>
 
+    <p>
+        Now try it! Use arrow keys to navigate through the endless cave!
+    </p>
+
 </div>
 
 <p class="mb-5">
@@ -54,7 +58,7 @@
     </button>
 </p>
 
-<canvas #endlessCrawlerCanvas [attr.width]="SIZE * PIXEL_SIZE" [attr.height]="SIZE * PIXEL_SIZE">
+<canvas #endlessCrawlerCanvas [attr.width]="SIZE * PIXEL_SIZE / 3" [attr.height]="SIZE * PIXEL_SIZE / 3">
 </canvas>
 
 <p style="height: 2rem;"></p>
