@@ -23,5 +23,10 @@ export class HomeComponent {
       link: 'endless-dungeon-crawler',
       description: 'an example of a procedurally generated dungeon crawler using cellular automata.',
     },
+    {
+      title: 'Evolving L-systems',
+      link: 'evolving-l-systems',
+      description: 'an example of a turtle machine evolving L-systems.',
+    },
   ];
 }

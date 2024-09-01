@@ -11,6 +11,10 @@ const routes: Routes = [
     loadChildren: () => import('./endlessDungeonCrawler/endless-dungeon-crawler.module').then( m => m.EndlessDungeonCrawlerModule),
   },
   {
+    path: 'evolving-l-systems',
+    loadChildren: () => import('./evolvingLSystems/evolving-l-systems.module').then( m => m.EvolvingLSystemsModule),
+  },
+  {
     path: '',
     pathMatch: 'full',
     loadChildren: () => import('./home/home.module').then( module => module.HomeModule), 

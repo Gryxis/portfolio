@@ -1,0 +1,83 @@
+<h1>
+    Evolving L Systems
+</h1>
+
+
+<p>
+    This is a Turtle which will draw some evolutions of L-Systems.
+</p>
+
+<p>
+    This means that you will tell a turtle where it shall go to step-by-step only defining a rule,
+    and this rule will be re-interpreted for every expansion.
+</p>
+<p>
+    Therefore here are some background informations:
+</p>
+
+<p>
+    The turtle has a direction it looks at and a position.
+    You can the turtle to turn left or right by a fixed degree.
+    And you can tell the turtle to take one step into the direction.
+
+    At the end I will show you which way the turtle took.
+</p>
+
+<p>
+    A L-System is a Grammar which has one function.
+    And the function will lead to a combination of 'F', '-', '+', '[' or ']'
+    End for each expansion any 'F' will be replaced by the value of the function.
+
+    e.g. the Function F -> F - F will lead to F-F by one expansion, F-F - F-F by two expansion and so forth.
+</p>
+
+<div class="was-validated">
+    <p>
+        <label>
+            The right side of the Function: F ->
+            <span class="input-group is-invalid" style="width: 10rem; display: inline-flex;">
+                <input type="text" class="form-control" [(ngModel)]="LGrammar" [min]="1"  pattern="[fF\-\+\[\] ]*"/>
+        
+            </span>
+        </label>
+    </p>
+    <p>
+        <label>
+            the rotation angle of the turtle in degrees: 
+            <span class="input-group is-invalid" style="width: 10rem; display: inline-flex;">
+                <input type="number" class="form-control" [(ngModel)]="angle" [min]="1"  [max]="360"/>
+        
+            </span>
+        </label>
+    </p>
+    <p>
+        <label>
+            how often shall I expand the grammar?: 
+            <span class="input-group is-invalid" style="width: 10rem; display: inline-flex;">
+                <input type="number" class="form-control" [(ngModel)]="expansions" [min]="0"/>
+            </span>
+        </label>
+    </p>
+    <p>
+        <label>
+            how far does the turtle go with every step ?: 
+            <span class="input-group is-invalid" style="width: 10rem; display: inline-flex;">
+                <input type="number" class="form-control" [(ngModel)]="stepSize" [min]="1"/>
+            </span>
+        </label>
+    </p>
+</div>
+
+<p class="mb-5">
+    <button type="button"
+            class="btn btn-outline-primary"
+            (click)="onStart()">
+        Start:
+    </button>
+</p>
+
+
+<p style="height: 2rem;"></p>
+
+<canvas #turtleCanvas [attr.width]="canvasWidth" [attr.height]="canvasHeight">
+</canvas>
