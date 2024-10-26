@@ -23,13 +23,14 @@ export class Turtle {
         return _.cloneDeep( this.path);
     }
 
-    constructor() {
-        this.pos = { x: 0, y: 0, dir: 0};
+    constructor(startPos = {dir : 0, x : 0, y : 0}) {
+        this.pos = { x: startPos.x, y: startPos.y, dir: startPos.dir};
         this.path = [ _.cloneDeep( this.pos)];
     }
     
     public rotate( degree: number) {
         this.pos.dir += degree;
+        this.pos.teleported = false;
         this.path.push ( _.cloneDeep( this.pos));
     }
 
@@ -41,6 +42,8 @@ export class Turtle {
 
         this.pos.x += stepSizeX,
         this.pos.y += stepSizeY,
+
+        this.pos.teleported = false;
 
         this.path.push ( _.cloneDeep( this.pos));
         this.updateDimension();

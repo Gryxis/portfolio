@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Turtle } from './turtle';
+import { Turtle, IPosition } from './turtle';
 
 @Component({
   selector: 'app-evolving-l-systems',
@@ -9,11 +9,13 @@ import { Turtle } from './turtle';
 export class EvolvingLSystemsComponent implements AfterViewInit {
 
   // e.g. F + F - F -F + F
+  // teleport: F [-F] F [+F] [F]
   public LGrammar: string = ' F + F - F -F + F';
 
   public stepSize: number = 8;
 
   public expansions: number = 1;
+  public startDirection = 0;
   public angle: number = 90;
 
   @ViewChild('turtleCanvas')
@@ -41,7 +43,8 @@ export class EvolvingLSystemsComponent implements AfterViewInit {
 
     const commands = this.expand();
 
-    const turtle = new Turtle();
+    const turtle = new Turtle( { dir: this.startDirection, x: 0, y:0});
+    const teleportStack: Array<IPosition> = [];
 
     for (let i = 0; i <  commands.length; i++) {
       const current = commands.charAt(i);
@@ -57,8 +60,12 @@ export class EvolvingLSystemsComponent implements AfterViewInit {
         case '+':
           turtle.rotate( this.angle);
           break;
-      
-          // TODO: add stack for self-similarity
+        case '[':
+          teleportStack.push( turtle.getPosition());
+          break;
+        case ']':
+          turtle.teleport(teleportStack.pop() as IPosition);
+          break;
         default:
           break;
       }
@@ -105,13 +112,20 @@ export class EvolvingLSystemsComponent implements AfterViewInit {
       this.canvasContext.moveTo( origin.x * this.stepSize , this.canvasHeight - origin.y * this.stepSize);
 
       turtle.getPath().reduce( (prev, cur, idx, arr) => {
-        if ( !!prev && prev.x == cur.x && prev.y == cur.y || cur.teleported) {
+        
+        if ( !!prev && prev.x == cur.x && prev.y == cur.y) {
           return cur;
         }
         const posX = (cur.x + origin.x) * this.stepSize;
         const posY = this.canvasHeight - (cur.y + origin.y) * this.stepSize; // flip y since canvas y direction is from top to bottom
         
-        this.canvasContext.lineTo( posX, posY);
+        if (cur.teleported) {
+          this.canvasContext.stroke();
+          this.canvasContext.beginPath();
+          this.canvasContext.moveTo( posX, posY);
+        } else {
+          this.canvasContext.lineTo( posX, posY);
+        }
 
         return cur;
       });
@@ -123,7 +137,3 @@ export class EvolvingLSystemsComponent implements AfterViewInit {
 
 }
 
-interface IPosition {
-  x: number,
-  y: number,
-};

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTooltipModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
   {
@@ -20,6 +20,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     NgbTooltipModule,
+    NgbNavModule,
     RouterModule.forChild(routes),
   ],
   exports: [

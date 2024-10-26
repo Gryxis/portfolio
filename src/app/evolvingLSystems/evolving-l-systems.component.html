@@ -31,6 +31,12 @@
     e.g. the Function F -> F - F will lead to F-F by one expansion, F-F - F-F by two expansion and so forth.
 </p>
 
+<p>
+    I have two examples for you:<br/>
+    F + F - F -F + F will create the Koch curve.<br/>
+    F [-F] F [+F] [F] wil create a treelike structure. You should use 30° as rotation angle.
+</p>
+
 <div class="was-validated">
     <p>
         <label>
@@ -66,6 +72,26 @@
             </span>
         </label>
     </p>
+    <p>
+        <label>
+            in which direction should the turtle look at the beginning?
+            <ul ngbNav [(activeId)]="startDirection" class="nav-pills">
+                <li [ngbNavItem]="180">
+                    <button ngbNavLink>Left</button>
+                </li>
+                <li [ngbNavItem]="0">
+                <button ngbNavLink>Right</button>
+                </li>
+                <li [ngbNavItem]="90">
+                <button ngbNavLink>Up</button>
+                </li>
+                <li [ngbNavItem]="270">
+                <button ngbNavLink>Down</button>
+                </li>
+              </ul>
+        </label>
+    </p>
+    
 </div>
 
 <p class="mb-5">
