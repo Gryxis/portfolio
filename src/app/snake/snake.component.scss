@@ -1,0 +1,9 @@
+.layer-container {
+    position: relative;
+    margin: 1rem;
+    
+    .layer {
+        position: absolute;
+        background-color: transparent;
+    }
+}

@@ -28,5 +28,10 @@ export class HomeComponent {
       link: 'evolving-l-systems',
       description: 'an example of a turtle machine evolving L-systems.',
     },
+    {
+      title: 'Snake the Game',
+      link: 'snake-game',
+      description: 'an implementation of the game snake',
+    },
   ];
 }

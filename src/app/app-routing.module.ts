@@ -15,6 +15,10 @@ const routes: Routes = [
     loadChildren: () => import('./evolvingLSystems/evolving-l-systems.module').then( m => m.EvolvingLSystemsModule),
   },
   {
+    path: 'snake-game',
+    loadChildren: () => import('./snake/snake.module').then( m => m.SnakeModule),
+  },
+  {
     path: '',
     pathMatch: 'full',
     loadChildren: () => import('./home/home.module').then( module => module.HomeModule), 

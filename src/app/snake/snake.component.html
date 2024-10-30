@@ -1,0 +1,23 @@
+<h1>
+    Snake
+</h1>
+
+
+<p>
+    This is the game Snake, feel free to play!
+</p>
+
+<div class="layer-container"
+        [ngStyle]="{'width.px': SIZE * PIXEL_SIZE, 'height.px': SIZE * PIXEL_SIZE}">
+    <canvas #backgroundCanvas
+            [attr.width]="SIZE * PIXEL_SIZE"
+            [attr.height]="SIZE * PIXEL_SIZE"
+            class="background-canvas layer">
+    </canvas>
+    <canvas #snakeCanvas
+            [attr.width]="SIZE * PIXEL_SIZE"
+            [attr.height]="SIZE * PIXEL_SIZE"
+            class="foregroundCanvas layer">
+    </canvas>
+    
+</div>
