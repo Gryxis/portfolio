@@ -1,11 +1,11 @@
-import * as _ from 'lodash';
+import { cloneDeep as _cloneDeep} from 'lodash-es';
 
 export class Turtle {
 
     private pos: IPosition;
 
     public getPosition(): IPosition {
-        return _.cloneDeep( this.pos);
+        return _cloneDeep( this.pos);
     }
 
     private dimension: Rectangle = {
@@ -14,24 +14,24 @@ export class Turtle {
     }
 
     public getDimension(): Rectangle {
-        return _.cloneDeep( this.dimension);
+        return _cloneDeep( this.dimension);
     }
     
     private path: Array<IPosition>;
 
     public getPath() {
-        return _.cloneDeep( this.path);
+        return _cloneDeep( this.path);
     }
 
     constructor(startPos = {dir : 0, x : 0, y : 0}) {
         this.pos = { x: startPos.x, y: startPos.y, dir: startPos.dir};
-        this.path = [ _.cloneDeep( this.pos)];
+        this.path = [ _cloneDeep( this.pos)];
     }
     
     public rotate( degree: number) {
         this.pos.dir += degree;
         this.pos.teleported = false;
-        this.path.push ( _.cloneDeep( this.pos));
+        this.path.push ( _cloneDeep( this.pos));
     }
 
     public step() {
@@ -45,16 +45,16 @@ export class Turtle {
 
         this.pos.teleported = false;
 
-        this.path.push ( _.cloneDeep( this.pos));
+        this.path.push ( _cloneDeep( this.pos));
         this.updateDimension();
     }
 
 
     public teleport( newPosition : IPosition) {
-        this.pos = _.cloneDeep( newPosition);
+        this.pos = _cloneDeep( newPosition);
         this.pos.teleported = true;
         this.updateDimension();
-        this.path.push ( _.cloneDeep( this.pos));
+        this.path.push ( _cloneDeep( this.pos));
     }
 
     private updateDimension() {
