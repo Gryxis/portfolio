@@ -8,7 +8,11 @@
 </p>
 
 <div class="layer-container"
-        [ngStyle]="{'width.px': SIZE * PIXEL_SIZE, 'height.px': SIZE * PIXEL_SIZE}">
+        [ngStyle]="{
+            'width.px': SIZE * PIXEL_SIZE,
+            'height.px': SIZE * PIXEL_SIZE,
+            'padding.px': PIXEL_SIZE * 0.625
+        }">
     <canvas #backgroundCanvas
             [attr.width]="SIZE * PIXEL_SIZE"
             [attr.height]="SIZE * PIXEL_SIZE"

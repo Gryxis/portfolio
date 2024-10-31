@@ -1,6 +1,12 @@
 .layer-container {
     position: relative;
     margin: 1rem;
+    box-sizing: content-box;
+    background: repeating-linear-gradient(
+        0deg,
+        #653208 0 64px,
+        #331904 64px 128px,
+    );
     
     .layer {
         position: absolute;

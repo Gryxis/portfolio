@@ -1,4 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { GameLogic, ISnake } from './game-logic';
+import { SnakeConstants } from './snake-constants';
+import { GameRenderer } from './renderer/game-renderer';
 
 @Component({
   selector: 'app-snake',
@@ -8,62 +11,35 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 export class SnakeComponent implements AfterViewInit {
 
   /** the width and height of the grid */
-  public readonly SIZE = 24;
+  public readonly SIZE = SnakeConstants.SIZE;
 
   /** the size of one pixel in the grid*/
-  public readonly PIXEL_SIZE = 32;
+  public readonly PIXEL_SIZE = SnakeConstants.PIXEL_SIZE;
 
   @ViewChild('snakeCanvas')
   private snakeCanvas!: ElementRef<HTMLCanvasElement>;
-  private foregroundRenderCtxt!: CanvasRenderingContext2D;
   
   @ViewChild('backgroundCanvas')
   private backgroundCanvas!: ElementRef<HTMLCanvasElement>;
 
+  private gameLogic: GameLogic = new GameLogic();
+  private renderer!: GameRenderer;
+
   public ngAfterViewInit(): void {
-    this.foregroundRenderCtxt = this.snakeCanvas.nativeElement.getContext('2d') as CanvasRenderingContext2D;
-    
-    this.drawBackground();
-  }
+    const foreground = this.snakeCanvas.nativeElement.getContext('2d') as CanvasRenderingContext2D;
 
-  private async drawBackground(): Promise<void> {
-    const context = this.backgroundCanvas.nativeElement.getContext('2d') as CanvasRenderingContext2D;
+    const background = this.backgroundCanvas.nativeElement.getContext('2d') as CanvasRenderingContext2D;
     
-    // fill one color after the other
-    // first light green
-    context.fillStyle = "#d1e7dd";
-    for (let x = 0; x < this.SIZE; x += 2) {
-      for (let y = 0; y < this.SIZE; y += 2) {
-        context.fillRect(
-          x * this.PIXEL_SIZE,
-          y * this.PIXEL_SIZE,
-          this.PIXEL_SIZE,
-          this.PIXEL_SIZE
-        );
-      }
-    }
-    // secondly darker green
-    context.fillStyle = "#a3cfbb";
-    for (let x = 1; x < this.SIZE; x += 2) {
-      for (let y = 1; y < this.SIZE; y += 2) {
-        context.fillRect(
-          x * this.PIXEL_SIZE,
-          y * this.PIXEL_SIZE,
-          this.PIXEL_SIZE,
-          this.PIXEL_SIZE
-        );
-      }
-    }
-    
-  }
+    this.renderer = new GameRenderer(
+      foreground,
+      background,
+      this.gameLogic
+    );
 
+    this.renderer.init();
+  }
   
   public onStartGame() {
-
-  }
-
-  
-  private drawFrame(): void {
 
   }
 
