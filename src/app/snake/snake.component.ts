@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { GameLogic, ISnake } from './game-logic';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild } from '@angular/core';
+import { Direction, GameLogic, ISnake } from './game-logic';
 import { SnakeConstants } from './snake-constants';
 import { GameRenderer } from './renderer/game-renderer';
 
@@ -8,7 +8,7 @@ import { GameRenderer } from './renderer/game-renderer';
   templateUrl: './snake.component.html',
   styleUrls: ['./snake.component.scss']
 })
-export class SnakeComponent implements AfterViewInit {
+export class SnakeComponent implements AfterViewInit, OnDestroy {
 
   /** the width and height of the grid */
   public readonly SIZE = SnakeConstants.SIZE;
@@ -22,8 +22,9 @@ export class SnakeComponent implements AfterViewInit {
   @ViewChild('backgroundCanvas')
   private backgroundCanvas!: ElementRef<HTMLCanvasElement>;
 
-  private gameLogic: GameLogic = new GameLogic();
+  public gameLogic: GameLogic = new GameLogic();
   private renderer!: GameRenderer;
+  private frameHandle: number = -1;
 
   public ngAfterViewInit(): void {
     const foreground = this.snakeCanvas.nativeElement.getContext('2d') as CanvasRenderingContext2D;
@@ -38,9 +39,48 @@ export class SnakeComponent implements AfterViewInit {
 
     this.renderer.init();
   }
-  
-  public onStartGame() {
 
+  public ngOnDestroy(): void {
+    this.renderer.destroy();
+    this.gameLogic.destroy();
+  }
+
+  @HostListener('window:keydown.arrowup',['$event'])
+  @HostListener('window:keydown.arrowdown',['$event'])
+  @HostListener('window:keydown.arrowright',['$event'])
+  @HostListener('window:keydown.arrowleft',['$event'])
+  public onDirectionChange( event: KeyboardEvent) {
+    
+    if (this.gameLogic.paused) {
+      return;
+    }
+
+    let direction: Direction = 'up';
+    switch (event.key) {
+      case "ArrowLeft":
+        direction = 'left';
+        break;
+      case "ArrowRight":
+        direction = 'right';
+        break;
+      case "ArrowUp":
+        direction = 'up';
+        break;
+        case "ArrowDown":
+          direction = 'down';
+        break;
+    }
+    
+    this.gameLogic.turn( direction);
+  }
+
+  @HostListener('window:keydown.space',['$event'])
+  public onPause() {
+    if (this.gameLogic.paused) {
+      this.gameLogic.resume();
+    } else {
+      this.gameLogic.pause();
+    }
   }
 
 }

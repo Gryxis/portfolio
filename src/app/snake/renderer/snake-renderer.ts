@@ -12,12 +12,6 @@ export class SnakeRenderer {
 
   public draw(): void {
 
-    // clear canvas for redrawing:
-    this.layer.fillStyle = "transparent";
-    this.layer.fillRect(
-      0, 0, SnakeConstants.SIZE * SnakeConstants.PIXEL_SIZE, SnakeConstants.SIZE * SnakeConstants.PIXEL_SIZE
-    );
-
     const snake = this.gameLogic.getSnake();
 
     this.drawTorso(snake);

@@ -11,7 +11,6 @@ export class AppleRenderer {
   }
 
   public draw(): void {
-    console.log("draw apple")
 
     const apple = this.gameLogic.getApple();
     this.layer.save();

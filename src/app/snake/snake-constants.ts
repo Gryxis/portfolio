@@ -12,6 +12,7 @@ export class SnakeConstants {
   };
 
   static readonly PIXEL_SIZE = 32;
-  static readonly SIZE = 24;
+  static readonly SIZE = 16;
+  static readonly PERIOD = 250;
 
 }
