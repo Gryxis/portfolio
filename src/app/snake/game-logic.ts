@@ -76,13 +76,19 @@ export class GameLogic {
   }
 
   public turn( direction: Direction): void {
-    const head = this.snake.positions[ this.snake.positions.length - 1];
-    const prev = this.snake.positions[ this.snake.positions.length - 2];
 
-    if (head.x > prev.x && direction == 'left'
-      || head.x < prev.x && direction == 'right'
-      || head.y > prev.y && direction == 'up' // y is pointing downwards
-      || head.y < prev.y && direction == 'down'
+    let dirBeforeTurn: Direction;
+    if (this.snake.directions.length > 0) {
+      dirBeforeTurn = this.snake.directions[this.snake.directions.length - 1];
+    } else {
+      dirBeforeTurn = this.getDirectionOfLastStep();
+    }
+
+    if (
+      dirBeforeTurn == 'right' && direction == 'left'
+      || dirBeforeTurn == 'left' && direction == 'right'
+      || dirBeforeTurn == 'down' && direction == 'up'
+      || dirBeforeTurn == 'up' && direction == 'down'
     ) {
       return; // can not move into itself
     }
@@ -145,6 +151,10 @@ export class GameLogic {
     if (this.snake.directions.length > 0) {
       return this.snake.directions[0];
     }
+    return this.getDirectionOfLastStep();
+  }
+
+  private getDirectionOfLastStep(): Direction {
     const head = this.snake.positions[this.snake.positions.length - 1];
     const prev = this.snake.positions[this.snake.positions.length - 2];
 
@@ -153,7 +163,7 @@ export class GameLogic {
     } else if (head.x < prev.x) {
       return 'left';
     } else if (head.y > prev.y) {
-      return 'down';
+      return 'down'; // y is pointing downwards
     } else {
       return 'up';
     }
