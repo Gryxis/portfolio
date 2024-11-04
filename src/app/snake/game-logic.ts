@@ -1,4 +1,4 @@
-import { filter, interval, Subscription } from "rxjs";
+import { BehaviorSubject, filter, interval, Subscription } from "rxjs";
 import { SnakeConstants } from "./snake-constants";
 import { isEqual } from 'lodash-es';
 
@@ -10,19 +10,16 @@ export class GameLogic {
 
   public score = 0;
   public highScore = 0;
-  public paused = true;
-  public lost = false;
 
   public loop: Subscription | undefined;
 
+  public state: BehaviorSubject<GameState> = new BehaviorSubject<any>('paused'); 
 
   constructor() {
     this.init();
   }
 
   private init(): void {
-    this.lost = false;
-    this.paused = true;
 
     const middle = Math.floor( SnakeConstants.SIZE / 2);
     this.score = 0;
@@ -41,7 +38,7 @@ export class GameLogic {
 
     if (!this.loop) {
       this.loop = interval(SnakeConstants.PERIOD).pipe(
-        filter( x => !this.paused)
+        filter( x => this.state.getValue() == 'playing')
       ).subscribe( () => {
         this.update();
       });
@@ -62,20 +59,32 @@ export class GameLogic {
 
   public destroy() {
     this.loop?.unsubscribe();
+    this.state.complete();
   }
 
   public resume() {
-    if (this.lost) {
+    if (this.state.getValue() == 'playing') {
+      return;
+    }
+
+    if (this.state.getValue() == 'gameOver') {
       this.init();
     }
-    this.paused = false;
+    this.state.next( 'playing');
   }
 
   public pause() {
-    this.paused = true;
+    if (this.state.getValue() === 'paused') {
+      return;
+    }
+    this.state.next( 'paused');
   }
 
   public turn( direction: Direction): void {
+
+    if (this.state.getValue() == 'paused') {
+      return; // ignore input when paused
+    }
 
     let dirBeforeTurn: Direction;
     if (this.snake.directions.length > 0) {
@@ -171,8 +180,7 @@ export class GameLogic {
 
   private lose(): void {
     this.highScore = Math.max(this.score, this.highScore);
-    this.lost = true;
-    this.pause();
+    this.state.next('gameOver');
   }
 
   private eatApple(): void {
@@ -207,3 +215,5 @@ interface IPosition {
   x: number;
   y: number;
 }
+
+export type GameState = 'paused' | 'playing' | 'gameOver';

@@ -36,3 +36,23 @@
         
     </div>
 </div>
+
+<ng-template #pauseModal let-modal>
+    <div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Game paused</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+    <div class="modal-body">
+        Close Modal or press space to resume.
+    </div>
+</ng-template>
+
+<ng-template #gameOverModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Game over</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+    <div class="modal-body">
+        Close Modal or press space to restart.
+    </div>
+</ng-template>
