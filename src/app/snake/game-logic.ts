@@ -211,7 +211,7 @@ export interface ISnake {
   directions: Direction[],
 }
 
-interface IPosition {
+export interface IPosition {
   x: number;
   y: number;
 }
