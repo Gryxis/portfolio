@@ -37,6 +37,37 @@
     </div>
 </div>
 
+<div class="d-flex w-100 justify-content-center flex-column align-items-center">
+    <button class="btn btn-secondary m-1"
+            type="button"
+            (click)="onMoveBtn('up')">
+            <span class="icon-arrow-up"></span>
+    </button>
+    <div class="d-flex">
+        <button class="btn btn-secondary m-1"
+                type="button"
+                (click)="onMoveBtn('left')">
+                <span class="icon-arrow-left"></span>
+        </button>
+        <button class="btn btn-secondary m-1"
+                type="button"
+                (click)="onMoveBtn('down')">
+                <span class="icon-arrow-down"></span>
+        </button>
+        <button class="btn btn-secondary m-1"
+                type="button"
+                (click)="onMoveBtn('right')">
+                <span class="icon-arrow-right"></span>
+        </button>
+    </div>
+
+    <button class="btn btn-secondary mt-1"
+            type="button"
+            (click)="onPause($event)">
+            <span class="icon-pause"></span>
+    </button>
+</div>
+
 <ng-template #pauseModal let-modal>
     <div class="modal-header">
 		<h4 class="modal-title" id="modal-basic-title">Game paused</h4>

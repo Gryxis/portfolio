@@ -94,13 +94,17 @@ export class SnakeComponent implements AfterViewInit, OnDestroy {
   }
 
   @HostListener('window:keydown.space',['$event'])
-  public onPause( event: KeyboardEvent) {
+  public onPause( event: UIEvent) {
     this.ngbModal.dismissAll();
     if ( [ 'paused', 'gameOver'].includes( this.gameLogic.state.getValue())) {
       this.gameLogic.resume();
     } else {
       this.gameLogic.pause();
     }
+  }
+
+  public onMoveBtn( direction: Direction) {
+    this.gameLogic.turn( direction);
   }
 
 }
