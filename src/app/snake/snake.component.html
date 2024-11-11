@@ -1,21 +1,12 @@
-<h1>
-    Snake
-</h1>
-
-
-<p>
-    This is the game Snake, feel free to play!
-</p>
-
 <div class="game-container">
-    <h1 [ngStyle]="{'padding-left.px': PIXEL_SIZE * 0.625}">
+    <h5 [ngStyle]="{'padding-left.px': PIXEL_SIZE * 0.625}">
         <span style="margin-right: 2rem;">
             Score: {{gameLogic.score}}
         </span>
         <span>
             Highscore: {{gameLogic.highScore}}
         </span>
-    </h1>
+    </h5>
     
     <div class="layer-container"
             [ngStyle]="{
@@ -37,7 +28,7 @@
     </div>
 </div>
 
-<div class="d-flex w-100 justify-content-center flex-column align-items-center">
+<div class="d-flex w-100 justify-content-center flex-column align-items-center d-lg-none">
     <button class="btn btn-secondary m-1"
             type="button"
             (click)="onMoveBtn('up')">
